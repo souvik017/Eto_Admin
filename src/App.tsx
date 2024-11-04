@@ -39,7 +39,7 @@ function App() {
           index
           element={
             <>
-              <PageTitle title="eCommerce Dashboard | LionelAgency - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Dashboard | ETO Admin Panel" />
               <ECommerce />
             </>
           }
@@ -57,7 +57,7 @@ function App() {
           path="/calendar"
           element={
             <>
-              <PageTitle title="Calendar | LionelAgency - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Calendar | ETO Admin Panel" />
               <Calendar />
             </>
           }
@@ -66,7 +66,7 @@ function App() {
           path="/profile"
           element={
             <>
-              <PageTitle title="Profile | LionelAgency - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Profile | ETO Admin Panel" />
               <Profile />
             </>
           }
@@ -93,7 +93,7 @@ function App() {
           path="/tables"
           element={
             <>
-              <PageTitle title="Tables | LionelAgency - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Tables | ETO Admin Panel" />
               <Tables />
             </>
           }
@@ -102,7 +102,7 @@ function App() {
           path="/settings"
           element={
             <>
-              <PageTitle title="Settings | LionelAgency - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Settings | ETO Admin Panel " />
               <Settings />
             </>
           }
@@ -138,7 +138,7 @@ function App() {
           path="/auth/signin"
           element={
             <>
-              <PageTitle title="Signin | LionelAgency - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signin | ETO Admin Panel" />
               <SignIn />
             </>
           }
@@ -147,7 +147,7 @@ function App() {
           path="/auth/signup"
           element={
             <>
-              <PageTitle title="Signup | LionelAgency - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signup | ETO Admin Panel" />
               <SignUp />
             </>
           }
