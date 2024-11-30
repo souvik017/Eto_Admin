@@ -12,16 +12,16 @@ TableTwo = () => {
   useEffect(() => {
     const apiUrl = 'http://localhost:8000/eto/api/v1/driver'; 
 
-  
     axios.get(apiUrl)
       .then(response => {
-        setDrivers(response.data.data);
+        setDrivers(response.data.data.drivers);
 
       })
       .catch(error => {
         console.error('Error fetching drivers:', error);
       });
   }, []);
+  
     return (
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex items-center justify-between">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
@@ -20,6 +20,8 @@ import Dashboard from './pages/Admin/Dashboard';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -30,12 +32,29 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  return loading ? (
-    <Loader />
-  ) : (
+
+
+  useEffect(() => {
+    // Check if a user is stored in localStorage
+    const user = localStorage.getItem('user');
+    if (!user) {
+      // If no user is found, navigate to the sign-in page
+      navigate('/signin');
+    } else {
+      // If a user exists, set isAuthenticated to true
+      setIsAuthenticated(true);
+    }
+  }, [navigate]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  return isAuthenticated ? (
     <DefaultLayout>
       <Routes>
         <Route
+          path="/"
           index
           element={
             <>
@@ -49,7 +68,7 @@ function App() {
           element={
             <>
               <PageTitle title="Collage Management Dashboard | LionelAgency - Tailwind CSS Admin Dashboard Template" />
-              < Dashboard/>
+              <Dashboard />
             </>
           }
         />
@@ -135,6 +154,10 @@ function App() {
           }
         />
         <Route
+    path="*"
+    element={<Navigate to="/" replace />}
+  />
+        {/* <Route
           path="/auth/signin"
           element={
             <>
@@ -142,8 +165,8 @@ function App() {
               <SignIn />
             </>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/auth/signup"
           element={
             <>
@@ -151,9 +174,22 @@ function App() {
               <SignUp />
             </>
           }
-        />
+        /> */}
       </Routes>
     </DefaultLayout>
+  ) : (
+    <Routes>
+      <Route
+        path="/signin"
+        element={
+          <>
+            <PageTitle title="Signin | ETO Admin Panel" />
+            <SignIn />
+          </>
+        }
+      />
+     
+    </Routes>
   );
 }
 

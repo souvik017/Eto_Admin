@@ -1,9 +1,11 @@
-import { ApexOptions } from 'apexcharts';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
 
-interface ChartThreeState {
-  series: number[];
+interface ChartThreeProps {
+  registerDriver: number;
+  activeDriver: number;
+  driverOnRide: number;
 }
 
 const options: ApexOptions = {
@@ -12,12 +14,11 @@ const options: ApexOptions = {
     type: 'donut',
   },
   colors: ['#3C50E0', '#8FD0EF', '#0FADCF'],
-  labels: ['Total Register Driver', 'Total Active Rider', 'Driver on Current Ride'],
+  labels: ['Total Register Driver', 'Total Active Driver', 'Driver on Current Ride'],
   legend: {
     show: false,
     position: 'bottom',
   },
-
   plotOptions: {
     pie: {
       donut: {
@@ -49,21 +50,16 @@ const options: ApexOptions = {
   ],
 };
 
-const ChartThree: React.FC = () => {
-  const [state, setState] = useState<ChartThreeState>({
-    series: [15, 10, 8],
-  });
+const ChartThree: React.FC<ChartThreeProps> = ({ registerDriver, activeDriver, driverOnRide }) => {
+  const [series, setSeries] = useState<number[]>([registerDriver, activeDriver, driverOnRide]);
 
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-      series: [15, 10, 8],
-    }));
-  };
-  handleReset;
+  useEffect(() => {
+    // Update series when props change
+    setSeries([registerDriver, activeDriver, driverOnRide]);
+  }, [registerDriver, activeDriver, driverOnRide]);
 
   return (
-    <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-1">
+    <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-2">
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
@@ -112,7 +108,7 @@ const ChartThree: React.FC = () => {
         <div id="chartThree" className="mx-auto flex justify-center">
           <ReactApexChart
             options={options}
-            series={state.series}
+            series={series}
             type="donut"
           />
         </div>
@@ -155,7 +151,7 @@ const ChartThree: React.FC = () => {
       <span className="mr-2 block h-3 w-3 rounded-full bg-primary"></span>
       <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
         <span>Total Register Driver</span>
-        <span>15</span>
+        <span>{registerDriver}</span>
       </p>
     </div>
   </div>
@@ -163,8 +159,8 @@ const ChartThree: React.FC = () => {
     <div className="flex w-full items-center">
       <span className="mr-2 block h-3 w-3 rounded-full bg-[#8FD0EF]"></span>
       <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-        <span>Total Active Rider</span>
-        <span>10</span>
+        <span>Total Active Driver</span>
+        <span>{activeDriver}</span>
       </p>
     </div>
   </div>
@@ -173,7 +169,7 @@ const ChartThree: React.FC = () => {
       <span className="mr-2 block h-3 w-3 rounded-full bg-[#0FADCF]"></span>
       <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
         <span>Driver on Current Ride</span>
-        <span>8</span>
+        <span>{driverOnRide}</span>
       </p>
     </div>
   </div>

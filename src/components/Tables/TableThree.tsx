@@ -15,7 +15,7 @@ const TableThree = () => {
   
     axios.get(apiUrl)
       .then(response => {
-        setDrivers(response.data.data);
+        setDrivers(response.data.data.drivers);
 
       })
       .catch(error => {
@@ -56,7 +56,7 @@ const TableThree = () => {
             </tr>
           </thead>
           <tbody>
-            {drivers.map((packageItem, key) => (
+            {drivers?.map((packageItem, key) => (
               <tr key={key}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">

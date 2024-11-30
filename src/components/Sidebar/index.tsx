@@ -227,6 +227,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Tables --> */}
 
               {/* <!-- Menu Item Settings --> */}
+
+
               <li>
                 <NavLink
                   to="/settings"
@@ -264,9 +266,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Settings
+                  Khorcha
                 </NavLink>
               </li>
+
+
+
+              
               {/* <!-- Menu Item Settings --> */}
             </ul>
           </div>

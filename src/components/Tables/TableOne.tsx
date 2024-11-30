@@ -4,66 +4,21 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Profile from '../Modals/Profile';
 
-//   {
-//     img: user,
-//     name: 'Ramesh',
-//     totalRide: 9,
-//     regiteredAt: '9/10/2024',
-//     totalEarning: 990,
-//   },
-//   {
-//     img: user,
-//     name: 'Ramesh',
-//     totalRide: 9,
-//     regiteredAt: '9/10/2024',
-//     totalEarning: 990,
-//   },
-//   {
-//     img: user,
-//     name: 'Ramesh',
-//     totalRide: 9,
-//     regiteredAt: '9/10/2024',
-//     totalEarning: 990,
-//   },
-//   {
-//     img: user,
-//     name: 'Ramesh',
-//     totalRide: 9,
-//     regiteredAt: '9/10/2024',
-//     totalEarning: 990,
-//   },
-//   {
-//     img: user,
-//     name: 'Ramesh',
-//     totalRide: 9,
-//     regiteredAt: '9/10/2024',
-//     totalEarning: 990,
-//   },
-// ];
-
-const TableOne = ({ name }) => {
-
-  const [drivers, setDrivers] = useState<User[]>([]);
+const TableOne = ({ name, drivers }) => {
   const [selectedUserData, setSelectedUserData] = useState(null);
   const [toggleModal, setToggleModal] = useState(false);
 
+
   console.log(drivers);
 
-  useEffect(() => {
-    const apiUrl = 'http://localhost:8000/eto/api/v1/driver'; 
-
+  interface Driver {
+    name: string;
+    total_complete_rides: number;
+    createdAt: string;
+    total_earning: number;
+    driver_photo: string;
+  }
   
-    axios.get(apiUrl)
-      .then(response => {
-        setDrivers(response.data.data);
-
-      })
-      .catch(error => {
-        console.error('Error fetching drivers:', error);
-      });
-  }, []);
-
-
   function registerdAt(dateString) {
 
     let date = new Date(dateString);
@@ -114,7 +69,7 @@ function handleViewProfile(user) {
           </div>
         </div>
 
-        {drivers.map((user, key) => (
+        {drivers?.map((user: Driver, key: number) => (
           <div
             className={`grid grid-cols-3 sm:grid-cols-5 ${
               key === drivers.length - 1

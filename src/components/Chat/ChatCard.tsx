@@ -6,101 +6,105 @@ import UserThree from '../../images/user/user-03.png';
 import UserFour from '../../images/user/user-04.png';
 import UserFive from '../../images/user/user-05.png';
 
-const chatData: Chat[] = [
+const userData: Array<{
+  avatar: string;
+  name: string;
+  address: string;
+  aadharNumber: string;
+}> = [
   {
     avatar: UserOne,
     name: 'Devid Heilo',
-    text: 'How are you?',
-    time: 12,
-    textCount: 3,
-    color: '#10B981',
+    address: '23, College Street, Kolkata, West Bengal, 700073',
+    aadharNumber: '1234-5678-9012',
   },
   {
     avatar: UserTwo,
     name: 'Henry Fisher',
-    text: 'Waiting for you!',
-    time: 12,
-    textCount: 0,
-    color: '#DC3545',
-  },
-  {
-    avatar: UserFour,
-    name: 'Jhon Doe',
-    text: "What's up?",
-    time: 32,
-    textCount: 0,
-    color: '#10B981',
-  },
-  {
-    avatar: UserFive,
-    name: 'Jane Doe',
-    text: 'Great',
-    time: 32,
-    textCount: 2,
-    color: '#FFBA00',
-  },
-  {
-    avatar: UserOne,
-    name: 'Jhon Doe',
-    text: 'How are you?',
-    time: 32,
-    textCount: 0,
-    color: '#10B981',
+    address: '12, Rabindra Sarani, Howrah, West Bengal, 711101',
+    aadharNumber: '2345-6789-0123',
   },
   {
     avatar: UserThree,
     name: 'Jhon Doe',
-    text: 'How are you?',
-    time: 32,
-    textCount: 3,
-    color: '#FFBA00',
+    address: '10, Station Road, Kharagpur, West Bengal, 721301',
+    aadharNumber: '3456-7890-1234',
+  },
+  {
+    avatar: UserFour,
+    name: 'Jane Doe',
+    address: '22, Kalighat Road, Kolkata, West Bengal, 700026',
+    aadharNumber: '4567-8901-2345',
+  },
+  {
+    avatar: UserFive,
+    name: 'Emily Brown',
+    address: 'B-17, Steel Township, Durgapur, West Bengal, 713205',
+    aadharNumber: '5678-9012-3456',
   },
 ];
 
 const ChatCard = () => {
+  // Function to handle approval
+  const handleApprove = (name: string) => {
+    console.log(`User ${name} approved`);
+    // Add logic for approval (e.g., API call)
+  };
+
+  // Function to handle rejection
+  const handleReject = (name: string) => {
+    console.log(`User ${name} rejected`);
+    // Add logic for rejection (e.g., API call)
+  };
+
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white py-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
       <h4 className="mb-6 px-7.5 text-xl font-semibold text-black dark:text-white">
-        Chats
+        Driver Verification
       </h4>
 
-      <div>
-        {chatData.map((chat, key) => (
-          <Link
-            to="/"
-            className="flex items-center gap-5 py-3 px-7.5 hover:bg-gray-3 dark:hover:bg-meta-4"
+      <div className="space-y-4 px-6">
+        {userData.map((user, key) => (
+          <div
+            className="flex items-center justify-between gap-4 py-2 border-gray-200 dark:border-gray-700"
             key={key}
           >
-            <div className="relative h-14 w-14 rounded-full">
-              <img src={chat.avatar} alt="User" />
-              <span
-                className="absolute right-0 bottom-0 h-3.5 w-3.5 rounded-full border-2 border-white"
-                style={{backgroundColor: chat.color}}
-              ></span>
-            </div>
-
-            <div className="flex flex-1 items-center justify-between">
+            {/* User Avatar */}
+            <div className="flex items-center gap-4">
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="h-10 w-10 rounded-full"
+              />
               <div>
                 <h5 className="font-medium text-black dark:text-white">
-                  {chat.name}
+                  {user.name}
                 </h5>
-                <p>
-                  <span className="text-sm text-black dark:text-white">
-                    {chat.text}
-                  </span>
-                  <span className="text-xs"> . {chat.time} min</span>
-                </p>
               </div>
-              {chat.textCount !== 0 && (
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary">
-                  <span className="text-sm font-medium text-white">
-                    {' '}
-                    {chat.textCount}
-                  </span>
-                </div>
-              )}
             </div>
-          </Link>
+
+            {/* Address and Aadhar Details */}
+            <div className="flex flex-col text-sm text-gray-600 dark:text-gray-300 gap-5 items-center">
+              <p>{user.address}</p>
+              <p>Aadhar No: {user.aadharNumber}</p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleApprove(user.name)}
+                className="rounded bg-green-500 px-3 py-1 text-sm text-white hover:bg-green-600"
+              >
+                Approve
+              </button>
+              <button
+                onClick={() => handleReject(user.name)}
+                className="rounded bg-red-500 px-3 py-1 text-sm text-white hover:bg-red-600"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
         ))}
       </div>
     </div>

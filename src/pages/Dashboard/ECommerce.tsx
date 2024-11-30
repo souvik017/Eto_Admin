@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import ChartOne from '../../components/Charts/ChartOne';
 import ChartThree from '../../components/Charts/ChartThree';
@@ -6,12 +6,232 @@ import ChartTwo from '../../components/Charts/ChartTwo';
 import ChatCard from '../../components/Chat/ChatCard';
 import MapOne from '../../components/Maps/MapOne';
 import TableOne from '../../components/Tables/TableOne';
+import axios from 'axios';
+
+const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
 
 const ECommerce: React.FC = () => {
+  const [registerDriver, setRegisterDriver] = useState();
+  const [driverOnCurrentRide, setDriverONCurrentRide] = useState();
+  const [activeDriver, setActiveDriver] = useState();
+  const [activeRide, setActiveRide] = useState();
+  const [totalEarnings, setTotalEarnings] = useState();
+  const [yourEarning, setYourEarnings] = useState();
+  const [recentRides, setRecentRides] = useState();
+
+  // console.log("activeDriver: ", activeDriver , activeRide , totalEarnings , yourEarning)
+  
+//   useEffect(() => {
+//     const apiUrl = `${BACKEND_URI}/eto/api/v1/driver/`;
+
+//     axios.get(apiUrl)
+//       .then(response => {
+//         setRegisterDriver(response.data.data.count);
+//       })
+//       .catch(error => {
+//         console.error('Error fetching drivers:', error);
+//       });
+// }, []);
+
+// useEffect(() => {
+//   const apiUrl = `${BACKEND_URI}/eto/api/v1/rides/all-driver/currentride`;
+
+//   axios.get(apiUrl)
+//     .then(response => {
+//       setDriverONCurrentRide(response.data.data.length);
+//     })
+//     .catch(error => {
+//       console.error('Error fetching drivers:', error);
+//     });
+// }, []);
+
+
+// useEffect(() => {
+//   const apiUrl = `${BACKEND_URI}/eto/api/v1/driver/active`;
+
+//   const fetchActiveDrivers = async () => {
+//     try {
+//       const response = await axios.get(apiUrl);
+//       console.log("Active data:", response.data);
+//       setActiveDriver(response.data.data.total);
+//     } catch (error) {
+//       if (axios.isAxiosError(error)) {
+//         setActiveDriver(error.response.data.data.total)
+//         // Axios-specific error handling
+//         console.error("Axios error:", error.response?.data.data.total);
+//         console.error("Status code:", error.response?.status || "No status");
+//       } else {
+//         // Handle unexpected errors
+//         console.error("Unexpected error:", error);
+//       }
+
+//     }
+//   };
+
+//   fetchActiveDrivers();
+// }, []);
+
+// useEffect(() => {
+//     const apiUrl = `${BACKEND_URI}/eto/api/v1/rides/activeRides`;
+
+//     axios.get(apiUrl)
+//       .then(response => {
+//         setActiveRide(response.data.data.length);
+//       })
+//       .catch(error => {
+//         console.error('Error fetching rides:', error);
+//       });
+// }, []);
+
+// useEffect(() => {
+//     const apiUrl = `${BACKEND_URI}/eto/api/v1/rides/totalEarnings`;
+
+//     axios.get(apiUrl)
+//       .then(response => {
+//         setTotalEarnings(response.data.totalEarnings);
+//       })
+//       .catch(error => {
+//         console.error('Error fetching total earnings:', error);
+//       });
+// }, []);
+
+// useEffect(() => {
+//     const apiUrl = `${BACKEND_URI}/eto/api/v1/admin/totalEarning/673f5bf5b7f063c029efa349`;
+
+//     axios.get(apiUrl)
+//       .then(response => {
+//         setYourEarnings(response.data.data.totalEarnings);
+//       })
+//       .catch(error => {
+//         console.error('Error fetching your earnings:', error);
+//       });
+// }, []);
+
+
+useEffect(() => {
+  // Function to fetch registered drivers
+  const fetchRegisterDriver = async () => {
+    const apiUrl = `${BACKEND_URI}/eto/api/v1/driver/`;
+    try {
+      const response = await axios.get(apiUrl);
+      setRegisterDriver(response.data.data.count);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Error fetching registered drivers:', error.response?.data || 'No response data');
+        console.error('Status code:', error.response?.status || 'No status');
+      } else {
+        console.error('Unexpected error fetching registered drivers:', error);
+      }
+    }
+  };
+
+  // Function to fetch drivers on current ride
+  const fetchDriverOnCurrentRide = async () => {
+    const apiUrl = `${BACKEND_URI}/eto/api/v1/rides/all-driver/currentride`;
+    try {
+      const response = await axios.get(apiUrl);
+      setDriverONCurrentRide(response.data.data.length);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Error fetching drivers on current ride:', error.response?.data || 'No response data');
+        console.error('Status code:', error.response?.status || 'No status');
+      } else {
+        console.error('Unexpected error fetching drivers on current ride:', error);
+      }
+    }
+  };
+
+  // Function to fetch active drivers
+  const fetchActiveDrivers = async () => {
+    const apiUrl = `${BACKEND_URI}/eto/api/v1/driver/active`;
+    try {
+      const response = await axios.get(apiUrl);
+      setActiveDriver(response.data.data.total);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setActiveDriver(error.response.data.data.total);
+        console.error('Error fetching active drivers:', error.response.data.data || 'No response data');
+        console.error('Status code:', error.response?.status || 'No status');
+      } else {
+        console.error('Unexpected error fetching active drivers:', error);
+      }
+    }
+  };
+
+  // Function to fetch active rides
+  const fetchActiveRides = async () => {
+    const apiUrl = `${BACKEND_URI}/eto/api/v1/rides/activeRides`;
+    try {
+      const response = await axios.get(apiUrl);
+      setActiveRide(response.data.data.length);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Error fetching active rides:', error.response?.data || 'No response data');
+        console.error('Status code:', error.response?.status || 'No status');
+      } else {
+        console.error('Unexpected error fetching active rides:', error);
+      }
+    }
+  };
+
+  // Function to fetch total earnings
+  const fetchTotalEarnings = async () => {
+    const apiUrl = `${BACKEND_URI}/eto/api/v1/rides/totalEarnings`;
+    try {
+      const response = await axios.get(apiUrl);
+      setTotalEarnings(response.data.totalEarnings);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Error fetching total earnings:', error.response?.data || 'No response data');
+        console.error('Status code:', error.response?.status || 'No status');
+      } else {
+        console.error('Unexpected error fetching total earnings:', error);
+      }
+    }
+  };
+
+  // Function to fetch your earnings
+  const fetchYourEarnings = async () => {
+    const apiUrl = `${BACKEND_URI}/eto/api/v1/admin/totalEarning/673f5bf5b7f063c029efa349`;
+    try {
+      const response = await axios.get(apiUrl);
+      setYourEarnings(response.data.data.totalEarnings);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Error fetching your earnings:', error.response?.data || 'No response data');
+        console.error('Status code:', error.response?.status || 'No status');
+      } else {
+        console.error('Unexpected error fetching your earnings:', error);
+      }
+    }
+  };
+
+
+  // Call all the functions
+  const fetchData = async () => {
+    await Promise.all([
+      fetchRegisterDriver(),
+      fetchDriverOnCurrentRide(),
+      fetchActiveDrivers(),
+      fetchActiveRides(),
+      fetchTotalEarnings(),
+      fetchYourEarnings(),
+    ]);
+  };
+
+  fetchData();
+}, []);
+
+
+
+function returnZeroIfUndefined(activeDriver: any): any {
+  return activeDriver === undefined ? 0 : activeDriver;
+}
+
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total Active Driver" total="15" rate="">
+        <CardDataStats title="Total Active Driver"  total={activeDriver} rate="">
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -30,7 +250,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Active Rides" total="10" rate="" >
+        <CardDataStats title="Total Active Rides" total={activeRide} rate="" >
           <svg
             className="fill-primary dark:fill-white"
             width="20"
@@ -53,7 +273,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Earnings" total="2400" rate="" >
+        <CardDataStats title="Total Earnings" total={totalEarnings} rate="" >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -72,7 +292,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Your Earnings" total="1000" rate="" >
+        <CardDataStats title="Your Earnings" total={yourEarning} rate="" >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -97,14 +317,14 @@ const ECommerce: React.FC = () => {
         </CardDataStats>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
         {/* <ChartTwo /> */}
-        <ChartThree />
-        <div className="col-span-12 xl:col-span-8">
-          <TableOne
-            name = "Top Channels" />
-        </div>
+        <ChartThree
+        registerDriver={registerDriver}
+        activeDriver={activeDriver}
+        driverOnRide={driverOnCurrentRide}
+      />
         <ChatCard />
       </div>
     </>
