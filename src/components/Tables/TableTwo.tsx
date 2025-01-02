@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { User } from '../../types/user';
 import axios from 'axios';
 
+const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
+
 const 
 TableTwo = () => {
  
@@ -10,7 +12,7 @@ TableTwo = () => {
 
 
   useEffect(() => {
-    const apiUrl = 'http://localhost:8000/eto/api/v1/driver'; 
+    const apiUrl = `${BACKEND_URI}/eto/api/v1/driver`; 
 
     axios.get(apiUrl)
       .then(response => {

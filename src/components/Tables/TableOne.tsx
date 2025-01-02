@@ -2,24 +2,32 @@ import { User } from '../../types/user';
 import user from "../../images/user/user-01.png"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Profile from '../Modals/Profile';
+import Profile from '../Modals/Profile.tsx';
 
-const TableOne = ({ name, drivers }) => {
+const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
+
+const TableOne = ({}) => {
   const [selectedUserData, setSelectedUserData] = useState(null);
   const [toggleModal, setToggleModal] = useState(false);
+  const [drivers, setDrivers] = useState<User[]>([]);
 
-
-  console.log(drivers);
-
-  interface Driver {
-    name: string;
-    total_complete_rides: number;
-    createdAt: string;
-    total_earning: number;
-    driver_photo: string;
-  }
+  useEffect(() => {
+    const apiUrl = `${BACKEND_URI}/eto/api/v1/driver/topDrivers`; 
   
-  function registerdAt(dateString) {
+    axios.get(apiUrl)
+      .then(response => {
+        const fetchedDrivers = response.data.data.map((item: { driverDetails: any; }) => item.driverDetails);
+        setDrivers(fetchedDrivers);
+      })
+      .catch(error => {
+        console.error('Error fetching drivers:', error);
+      });
+  }, []);
+  
+  
+
+
+  function registerdAt(dateString: string | number | Date) {
 
     let date = new Date(dateString);
 
@@ -30,14 +38,14 @@ const TableOne = ({ name, drivers }) => {
     return `${day} / ${month} / ${year}`;
 }
 
-function handleViewProfile(user) {
+function handleViewProfile(user: User) {
   setSelectedUserData(user);
   setToggleModal(true);
 }
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1 border-blue-500 border-2">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-       {name}
+       Top Drivers
       </h4>
 
       <div className="flex flex-col">
@@ -69,7 +77,7 @@ function handleViewProfile(user) {
           </div>
         </div>
 
-        {drivers?.map((user: Driver, key: number) => (
+        {drivers.map((user, key) => (
           <div
             className={`grid grid-cols-3 sm:grid-cols-5 ${
               key === drivers.length - 1

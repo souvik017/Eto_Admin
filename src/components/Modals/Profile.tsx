@@ -1,8 +1,16 @@
 import React from 'react';
 import { MdClose } from 'react-icons/md';
+import { User } from '../../types/user';
+// Define the props for the Profile component
 
-const Profile = ({ userData, closeModal }) => {
-  if (!userData) return null;
+
+interface ProfileProps {
+  userData: any; // Assuming User is your type
+  closeModal: () => void;
+}
+
+const Profile: React.FC<ProfileProps> = ({ userData, closeModal }) => {
+  if (!userData) return null; // Handle case where userData is null
 
 
   function registerdAt(dateString) {

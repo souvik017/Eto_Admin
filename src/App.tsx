@@ -24,6 +24,8 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { pathname } = useLocation();
 
+// console.log(App)
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -118,10 +120,10 @@ function App() {
           }
         />
         <Route
-          path="/settings"
+          path="/duerequest"
           element={
             <>
-              <PageTitle title="Settings | ETO Admin Panel " />
+              <PageTitle title="Due Request | ETO Admin Panel " />
               <Settings />
             </>
           }
